@@ -5,15 +5,19 @@ import ContactForm from './Components/ContactForm/ContactForm';
 import Filter from './Components/Filter/Filter';
 import ContactList from './Components/Contacts/ContactList';
 import Section from './Common/Section';
+import Alert from './Components/Alert/Alert';
 import toaster from 'toasted-notes';
 import 'toasted-notes/src/styles.css';
 import { saveToLS, getFromLS } from './utils/helper';
+import { Transition } from 'react-transition-group';
 import './App.css';
 
 export default class App extends Component {
   state = {
     contacts: [],
     filter: '',
+    alert: false,
+    timerId: null,
   };
 
   componentDidMount() {
@@ -25,6 +29,10 @@ export default class App extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevState.contacts !== this.state.contacts) {
       saveToLS('contacts', this.state.contacts);
+    }
+
+    if (prevState.timerId !== this.state.timerId) {
+      this.setState({ timerId: null });
     }
   }
 
@@ -39,9 +47,9 @@ export default class App extends Component {
     const isExist = contacts.find(contact => contact.name === name);
 
     if (isExist) {
-      toaster.notify(`${name} is already in contacts.`, {
-        duration: 5000,
-      });
+      this.toggleAlert();
+      const timerId = setTimeout(() => this.toggleAlert(), 5000);
+      this.setState({ timerId: timerId });
     } else if (!name || !number) {
       toaster.notify('Please fill the form', {
         duration: 5000,
@@ -65,31 +73,52 @@ export default class App extends Component {
     }));
   };
 
+  toggleAlert = () => {
+    this.setState(({ alert }) => ({ alert: !alert }));
+  };
+
   render() {
-    const { contacts, filter } = this.state;
+    const { contacts, filter, alert } = this.state;
     const toLowerFilter = filter.toLowerCase();
     const visibleContacts = contacts.filter(contact =>
       contact.name.toLowerCase().includes(toLowerFilter),
     );
 
     return (
-      <Container>
-        <Section title="Phonebook">
-          <ContactForm onSubmit={this.addContact} onChange={this.inputChange} />
-        </Section>
+      <>
+        <Container>
+          <Transition in={true} timeout={500} appear>
+            {status => <h1 className={`h1Title-${status}`}>Phonebook</h1>}
+          </Transition>
 
-        <Section title="Contacts">
-          <Filter
-            filter={filter}
-            contactsLength={contacts.length}
-            onChange={this.inputChange}
-          />
-          <ContactList
-            contacts={visibleContacts}
-            onDelete={this.deleteContact}
-          />
-        </Section>
-      </Container>
+          <Section title="New contact">
+            <ContactForm
+              onSubmit={this.addContact}
+              onChange={this.inputChange}
+            />
+          </Section>
+
+          <Section title="Contacts">
+            <Filter
+              filter={filter}
+              contactsLength={contacts.length}
+              onChange={this.inputChange}
+            />
+            <ContactList
+              contacts={visibleContacts}
+              onDelete={this.deleteContact}
+            />
+          </Section>
+        </Container>
+
+        {alert && (
+          <Transition in={true} timeout={100} appear>
+            {status => (
+              <Alert message="Contact already exists" status={status} />
+            )}
+          </Transition>
+        )}
+      </>
     );
   }
 }

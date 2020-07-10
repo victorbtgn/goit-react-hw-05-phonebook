@@ -13,8 +13,8 @@ const ContactItem = ({ id, name, number, onDelete }) => (
         {number[6]}
       </span>
     </div>
-    <button className="btn" type="button" onClick={() => onDelete(id)}>
-      Delete
+    <button className="btnContact" type="button" onClick={() => onDelete(id)}>
+      &#215;
     </button>
   </li>
 );
