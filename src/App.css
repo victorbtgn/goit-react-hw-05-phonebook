@@ -1,0 +1,57 @@
+.phonebook {
+  max-width: 400px;
+  padding: 30px;
+  background: linear-gradient(to right, #daf7f856, #63f8f844);
+  border-radius: 15px;
+}
+
+.section {
+  margin-bottom: 20px;
+}
+
+.feedback-title {
+  color: #4f5252;
+  margin-bottom: 10px;
+}
+
+.input {
+  margin-bottom: 10px;
+  padding: 0 10px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+}
+
+.btn {
+  padding: 0 10px;
+  border: 1px solid #01afaf;
+  border-radius: 15px;
+  background: transparent;
+  transition: 0.3s linear;
+}
+
+.btn:hover {
+  background: #01afaf;
+  transition: 0.1s linear;
+}
+
+.list {
+  list-style: none;
+}
+
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #01afaf;
+}
+
+.list-item-data {
+  width: 70%;
+  display: flex;
+  justify-content: space-between;
+}
