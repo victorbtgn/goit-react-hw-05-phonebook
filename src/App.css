@@ -6,7 +6,6 @@
 }
 
 h1 {
-  margin-bottom: 20px;
   color: #0b3bc0;
   text-shadow: 5px 5px 10px #bfdf0d;
 }
@@ -163,4 +162,32 @@ input::-webkit-inner-spin-button {
   opacity: 0;
   transform: scale(0.05) translateX(-1000px);
   transition: 500ms ease;
+}
+
+/* Theme checkbox */
+
+.ThemeContext {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.ThemeContext input {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.ThemeContext label {
+  font-size: 18px;
+}
+
+.bodyLigth {
+  background-color: #fafafa;
+  transition: 1s ease;
+}
+
+.bodyDark {
+  background-color: #363535;
+  transition: 1s ease;
 }

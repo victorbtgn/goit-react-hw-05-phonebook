@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import Container from './Common/Container';
+import Container from './Common/Container/Container';
 import ContactForm from './Components/ContactForm/ContactForm';
 import Filter from './Components/Filter/Filter';
 import ContactList from './Components/Contacts/ContactList';
-import Section from './Common/Section';
+import Section from './Common/Section/Section';
 import Alert from './Components/Alert/Alert';
 import toaster from 'toasted-notes';
 import 'toasted-notes/src/styles.css';
 import { saveToLS, getFromLS } from './utils/helper';
 import { Transition } from 'react-transition-group';
 import './App.css';
+import ThemeContext from './Common/ThemeContext/ThemeContext';
 
 export default class App extends Component {
   state = {
@@ -90,6 +91,8 @@ export default class App extends Component {
           <Transition in={true} timeout={500} appear>
             {status => <h1 className={`h1Title-${status}`}>Phonebook</h1>}
           </Transition>
+
+          <ThemeContext />
 
           <Section title="New contact">
             <ContactForm
