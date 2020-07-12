@@ -10,8 +10,8 @@ import toaster from 'toasted-notes';
 import 'toasted-notes/src/styles.css';
 import { saveToLS, getFromLS } from './utils/helper';
 import { Transition } from 'react-transition-group';
+import Theme from './Common/ThemeContext/ThemeContext';
 import './App.css';
-import ThemeContext from './Common/ThemeContext/ThemeContext';
 
 export default class App extends Component {
   state = {
@@ -92,7 +92,7 @@ export default class App extends Component {
             {status => <h1 className={`h1Title-${status}`}>Phonebook</h1>}
           </Transition>
 
-          <ThemeContext />
+          <Theme />
 
           <Section title="New contact">
             <ContactForm

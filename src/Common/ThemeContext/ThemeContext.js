@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import withTheme from '../HOC/withTheme';
+import Label from '../../Components/Label/Label';
 
-const ThemeContext = ({ checked, onChecked }) => {
+const ThemeContext = createContext();
+
+const Theme = ({ checked, onChecked }) => {
   const handleCheckbox = evt => {
     onChecked(evt.target.checked);
   };
@@ -9,20 +12,28 @@ const ThemeContext = ({ checked, onChecked }) => {
   handleTheme(checked);
 
   return (
-    <div className="ThemeContext">
-      <input
-        type="checkbox"
-        id="theme"
-        name="theme"
-        checked={checked}
-        onChange={handleCheckbox}
-      />
-      <label htmlFor="theme">{checked ? 'Dark' : 'Ligth'}</label>
-    </div>
+    <ThemeContext.Provider value={checked}>
+      <div className="ThemeContext">
+        <input
+          type="checkbox"
+          id="theme"
+          name="theme"
+          checked={checked}
+          onChange={handleCheckbox}
+        />
+        <Toolbar />
+      </div>
+    </ThemeContext.Provider>
   );
 };
 
-export default withTheme(ThemeContext);
+export default withTheme(Theme);
+
+const Toolbar = () => (
+  <ThemeContext.Consumer>
+    {checked => <Label checked={checked} />}
+  </ThemeContext.Consumer>
+);
 
 const handleTheme = checked => {
   if (!checked) {
